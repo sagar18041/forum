@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @topic.name %>
+</p>
+
+<p>
+  <b>Post:</b>
+  <%= @topic.post %>
+</p>
+
+<!-- <p>
+  <b>Category:</b>
+  <%#= @topic.category_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%#= @topic.user_id %>
+</p> -->
+<%@comments.each do |comment|%>
+<%=comment.content%>
+<%= user_name(comment.user_id)%>
+<%end%>
+<%=form_for([@topic,@comment]) do |f| %>
+<div class="field">
+    <%= f.label :content %><br />
+    <%= f.text_field :content %>
+    <%= f.hidden_field :user_id, :value=>current_user.id%>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<%end%>
+
+<%= link_to 'Edit', edit_category_topic_path(@category,@topic) %> |
+<%= link_to 'Back', topics_path %>
