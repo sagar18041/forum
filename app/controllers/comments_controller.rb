@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  load_and_authorize_resource
   # GET /comments
   # GET /comments.json
   before_filter :get_topic
@@ -42,6 +43,7 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = @topic.comments.new(params[:comment])
+    current_user.add_role :author, @comment
     respond_to do |format|
       if @comment.save
         format.js 

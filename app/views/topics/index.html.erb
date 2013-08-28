@@ -14,8 +14,10 @@
   <tr>
     <td><%= link_to topic.name, category_topic_path(@category,topic) %></td>
     <td><%= topic.post %></td>
-    <td><%= link_to 'Edit', edit_category_topic_path(@category,topic) %></td>
-    <td><%= link_to 'Destroy', category_topic_path(@category,topic), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <%if current_user.has_role? :author, @topic%>
+      <td><%= link_to 'Edit', edit_category_topic_path(@category,topic) %></td>
+      <td><%= link_to 'Destroy', category_topic_path(@category,topic), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <%end%>
   </tr>
 <% end %>
 </table>

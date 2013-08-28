@@ -33,6 +33,7 @@ GEM
     bootstrap-sass (2.3.2.1)
       sass (~> 3.2)
     builder (3.0.4)
+    cancan (1.6.10)
     carrierwave (0.9.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -100,6 +101,7 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    rolify (3.2.0)
     sass (3.2.10)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -128,6 +130,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-sass (~> 2.3.2.1)
+  cancan
   carrierwave
   coffee-rails (~> 3.2.1)
   devise
@@ -136,5 +139,6 @@ DEPENDENCIES
   pg
   pry
   rails (= 3.2.13)
+  rolify
   sass-rails (~> 3.2.3)
   uglifier (>= 1.0.3)

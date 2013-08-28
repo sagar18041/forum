@@ -1,4 +1,5 @@
 class TopicsController < ApplicationController
+   load_and_authorize_resource
   # GET /topics
   # GET /topics.json
   before_filter :get_category
@@ -27,7 +28,6 @@ class TopicsController < ApplicationController
   # GET /topics/new.json
   def new
     @topic = @category.topics.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @topic }
@@ -42,9 +42,8 @@ class TopicsController < ApplicationController
   # POST /topics
   # POST /topics.json
   def create
-    binding.pry
     @topic = @category.topics.new(params[:topic])
-
+    current_user.add_role :author, @topic
     respond_to do |format|
       if @topic.save
         format.html { redirect_to category_topic_path(@category,@topic), notice: 'Topic was successfully created.' }
@@ -63,7 +62,7 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.update_attributes(params[:topic])
-        format.html { redirect_to category_topics_path(@category,@topic), notice: 'Topic was successfully updated.' }
+        format.html { redirect_to category_topics_path(@category), notice: 'Topic was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -79,7 +78,7 @@ class TopicsController < ApplicationController
     @topic.destroy
 
     respond_to do |format|
-      format.html { redirect_to topics_url }
+      format.html { redirect_to category_topics_path(@category) }
       format.json { head :no_content }
     end
   end

@@ -25,6 +25,8 @@ gem 'kaminari'
 gem 'carrierwave'
 gem 'bootstrap-sass', '~> 2.3.2.1'
 gem 'jquery-rails'
+gem 'cancan'
+gem "rolify"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

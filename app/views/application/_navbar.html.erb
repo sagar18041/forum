@@ -1,0 +1,22 @@
+<div class="navbar navbar-static-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="<%#= profile_path%>"><%="Forum" %></a>
+      <ul class="nav">
+        <%#binding.pry%>
+      
+      </ul>
+      <ul class="pull-right nav">
+        <%if current_user%>
+          <li>
+            <%= link_to current_user.email, destroy_user_session_path, :method=>:delete %>
+          </li>
+        <% elsif request.path!= "/" %>
+          <li>
+            <%= link_to "Login", user_session_path %>
+          </li>
+        <%end%>  
+      </ul>
+    </div>
+  </div>
+</div>
