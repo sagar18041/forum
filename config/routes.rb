@@ -2,15 +2,13 @@ Forum::Application.routes.draw do
   devise_for :users
 
 
-  resources :categories do
-    resources :topics
-  end
+  resources :categories
 
   resources :topics do
     resources :comments
   end
 
-  root :to => 'categories#index'
+  root :to => 'topics#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,15 +1,31 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Name:</b>
-  <%= @topic.name %>
-</p>
+<table class='topic_<%=@topic.id%> table table-hover'>
+  <tr>
+    <th>Topic</th>
+    <th>Replies</th>
+    <th>Creator</th>
+    <th>Created at</th>
+    <th>Updated at</th>
+    <%if current_user.has_role? :author, @topic or current_user.has_role? :admin%>
+      <th colspan=2>Operations</th>
+    <%end%>  
+  </tr>
 
-<p>
-  <b>Post:</b>
-  <%= @topic.post %>
-</p>
-
+  <tr class='forum_<%= @topic.id%>'>
+    <td><%= link_to @topic.name, topic_path(@topic) %></td>
+    <td><%= @topic.comments.count %></td>
+    <td><%= user_email(@topic.user_id) %></td>
+    <td><%= @topic.created_at.strftime("%d/%m/%Y %H:%M %p") %></td>
+    <td><%= @topic.updated_at.strftime("%d/%m/%Y %H:%M %p")  %></td>
+    <%if current_user.has_role? :author, @topic%>
+      <td><%= link_to 'Edit', edit_topic_path(@topic) %></td>
+      <td><%= link_to 'Destroy', topic_path(@topic), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <%end%>
+  </tr>
+</table>
+ 
 <!-- <p>
   <b>Category:</b>
   <%#= @topic.category_id %>
@@ -22,11 +38,12 @@
 <div class='comment_section'>
   <%= render partial: "comments/comment", collection: @comments %>
 </div>
+<a href="javascript:void(0)" id='new_post' class='btn btn-success'>Post</a>
 <div class='add_comment'>
   <%=form_for([@topic,@comment], :remote=>true,:html=>{:id=>'new_comment'}) do |f| %>
     <div class="field">
       <%= f.label :content %><br />
-      <%= f.text_field :content %>
+      <%= f.text_field :content, :required=>true %>
       <%= f.hidden_field :user_id, :value=>current_user.id%>
     </div>
     <div class="actions">
@@ -35,5 +52,5 @@
   <%end%>
   
 </div>
-<%= link_to 'Edit', edit_category_topic_path(@category,@topic) %> |
-<%= link_to 'Back', category_topics_path(@category) %>
+<%= link_to 'Edit', edit_topic_path(@topic) %> |
+<%= link_to 'Back', topics_path %>

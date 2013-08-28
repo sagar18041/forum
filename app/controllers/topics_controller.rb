@@ -2,9 +2,14 @@ class TopicsController < ApplicationController
    load_and_authorize_resource
   # GET /topics
   # GET /topics.json
-  before_filter :get_category
   def index
-    @topics = @category.topics.all
+    # binding.pry
+    @categories = Category.all
+    if params[:name].present?
+      @topics = Topic.where(:category_id=>params[:name].to_i).group_by &:category_id
+    else
+      @topics = Topic.all.group_by &:category_id
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,7 +20,7 @@ class TopicsController < ApplicationController
   # GET /topics/1
   # GET /topics/1.json
   def show
-    @topic = @category.topics.find(params[:id])
+    @topic = Topic.find(params[:id])
     @comment = Comment.new
     @comments = @topic.comments
     respond_to do |format|
@@ -27,7 +32,7 @@ class TopicsController < ApplicationController
   # GET /topics/new
   # GET /topics/new.json
   def new
-    @topic = @category.topics.new
+    @topic = Topic.new
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @topic }
@@ -36,17 +41,17 @@ class TopicsController < ApplicationController
 
   # GET /topics/1/edit
   def edit
-    @topic = @category.topics.find(params[:id])
+    @topic = Topic.find(params[:id])
   end
 
   # POST /topics
   # POST /topics.json
   def create
-    @topic = @category.topics.new(params[:topic])
+    @topic = Topic.new(params[:topic])
     current_user.add_role :author, @topic
     respond_to do |format|
       if @topic.save
-        format.html { redirect_to category_topic_path(@category,@topic), notice: 'Topic was successfully created.' }
+        format.html { redirect_to topic_path(@topic), notice: 'Topic was successfully created.' }
         format.json { render json: @topic, status: :created, location: @topic }
       else
         format.html { render action: "new" }
@@ -58,11 +63,11 @@ class TopicsController < ApplicationController
   # PUT /topics/1
   # PUT /topics/1.json
   def update
-    @topic = @category.topics.find(params[:id])
+    @topic = Topic.find(params[:id])
 
     respond_to do |format|
       if @topic.update_attributes(params[:topic])
-        format.html { redirect_to category_topics_path(@category), notice: 'Topic was successfully updated.' }
+        format.html { redirect_to topic_path(@topic), notice: 'Topic was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -74,18 +79,13 @@ class TopicsController < ApplicationController
   # DELETE /topics/1
   # DELETE /topics/1.json
   def destroy
-    @topic = @category.topics.find(params[:id])
+    @topic = Topic.find(params[:id])
     @topic.destroy
 
     respond_to do |format|
-      format.html { redirect_to category_topics_path(@category) }
+      format.html { redirect_to topic_path(@topic) }
       format.json { head :no_content }
     end
   end
 
-  protected
-
-  def get_category
-    @category = Category.find(params[:category_id])
-  end
 end

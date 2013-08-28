@@ -10,7 +10,7 @@
 
 <% @categories.each do |category| %>
   <tr>
-    <td><%= link_to category.name, category_topics_path(category) %></td>
+    <td><%= link_to category.name, topics_path %></td>
     <%if current_user.has_role? :admin%>
     <td><%= link_to 'Edit', edit_category_path(category) %></td>
     <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>

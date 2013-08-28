@@ -1,10 +1,14 @@
-<div class="navbar navbar-static-top">
+<div class="navbar navbar-static-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="<%#= profile_path%>"><%="Forum" %></a>
+      <a class="brand" href="<%= root_url%>"><%="Forum" %></a>
       <ul class="nav">
         <%#binding.pry%>
-      
+        <%if current_user.present?%>
+          <%if current_user.has_role? 'admin'%>
+            <li><%= link_to 'Category', categories_path%></li>
+          <%end%>
+        <%end%>  
       </ul>
       <ul class="pull-right nav">
         <%if current_user%>
