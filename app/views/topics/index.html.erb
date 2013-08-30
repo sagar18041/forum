@@ -1,6 +1,6 @@
 <%=form_for(topics_path, :method=>:get) do%>
   Search by Category: <%= select_tag "name", options_from_collection_for_select(@categories, "id", "name",:selected=>params[:name]) %>
-  <%= submit_tag 'Search'%>
+  <%= submit_tag 'Search', :class=>'search'%>
 <%end%>
 
 <h1>Listing topics</h1>

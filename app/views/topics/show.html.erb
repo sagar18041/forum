@@ -36,7 +36,10 @@
   <%#= @topic.user_id %>
 </p> -->
 <div class='comment_section'>
-  <%= render partial: "comments/comment", collection: @comments %>
+  <h4>Posts</h4>
+  <table width=100%>
+    <%= render partial: "comments/comment", collection: @comments %>
+  </table>
 </div>
 <a href="javascript:void(0)" id='new_post' class='btn btn-success'>Post</a>
 <div class='add_comment'>

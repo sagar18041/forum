@@ -1,8 +1,15 @@
-<div id="comment_<%=comment.id%>">
-	<%=comment.content%>
-	<%= user_name(comment.user_id)%>
+<tr id="comment_<%=comment.id%>">
+	<td>
+		<%=comment.content%>
+	</td>
+	<td>
+		Post by :&nbsp;
+		<%= user_name(comment.user_id)%>
+	</td>
 	<%if current_user.has_role? :admin%>
-		<%= link_to 'Destroy', topic_comment_path(@topic,comment), method: :delete, data: { confirm: 'Are you sure?' } %>
+		<td>	
+			<%= link_to 'Destroy', topic_comment_path(@topic,comment), method: :delete, data: { confirm: 'Are you sure?' } %>
+		</td>	
 	<%end%>
-</div>
+</tr>
 
