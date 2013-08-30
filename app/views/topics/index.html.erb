@@ -18,7 +18,7 @@
           <th colspan=2>Operations</th>
         <%end%>  
       </tr>
-      <caption><%=category_name(t.first)%></caption>
+      <caption><%=category_name(t.first.to_i)%></caption>
       <%t.last.each do |topic|%>
         <tr class='forum_<%= topic.id%>'>
           <td><%= link_to topic.name, topic_path(topic) %></td>

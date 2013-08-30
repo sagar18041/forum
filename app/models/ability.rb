@@ -17,6 +17,8 @@ class Ability
             can :manage, Comment  
             can :read, :all
         elsif user.has_role? :user
+            can :manage, Topic
+            can :manage, Comment
             can :read, :all
             cannot :destroy, :all
         end  
