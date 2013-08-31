@@ -2,11 +2,12 @@ class TopicsController < ApplicationController
    load_and_authorize_resource
   # GET /topics
   # GET /topics.json
+  
   def index
     # binding.pry
     @categories = Category.all
     if params[:name].present?
-      @topics = Topic.where(:category_id=>params[:name].to_i).group_by &:category_id
+      @topics = Topic.search_category(params[:name].to_i).group_by &:category_id
     else
       @topics = Topic.all.group_by &:category_id
     end
